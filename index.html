@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Budget Bubble Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #FFF7FB; /* Very light pastel pink */
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            color: #A64D79; /* Dark pink for contrast */
+        }
+        canvas {
+            max-width: 800px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🚀 Space Budgets by Country 🌍</h2>
+    <canvas id="bubbleChart"></canvas>
+
+    <script>
+        const ctx = document.getElementById('bubbleChart').getContext('2d');
+
+        const data = {
+            datasets: [{
+                label: 'Space Budgets by Country',
+                data: [
+                    { x: 0.11, y: 25.4, r: 50, label: "🇺🇸 USA (NASA)" },
+                    { x: 0.08, y: 12, r: 40, label: "🇨🇳 China (CNSA)" },
+                    { x: 0.18, y: 3, r: 30, label: "🇷🇺 Russia (Roscosmos)" },
+                    { x: 0.05, y: 1.5, r: 25, label: "🇮🇳 India (ISRO)" },
+                    { x: 0.03, y: 7.5, r: 35, label: "🇪🇺 EU (ESA)" }
+                ],
+                backgroundColor: ['#FF9AA2', '#FFB7B2', '#FFDAC1', '#B5EAD7', '#C7CEEA'], 
+                borderColor: '#A64D79',
+                borderWidth: 2
+            }]
+        };
+
+        const config = {
+            type: 'bubble',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        backgroundColor: "#A64D79",
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 12 },
+                        bodyColor: "#FFFFFF",
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw.label + 
+                                       "\n💰 Budget: $" + context.raw.y + "B" + 
+                                       "\n📊 % GDP: " + context.raw.x + "%";
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            font: { size: 14 },
+                            color: "#A64D79"
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "% of GDP Spent on Space",
+                            color: "#A64D79",
+                            font: { size: 14 }
+                        },
+                        ticks: { color: "#A64D79" }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Annual Budget (Billion USD)",
+                            color: "#A64D79",
+                            font: { size: 14 }
+                        },
+                        ticks: { color: "#A64D79" }
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>
